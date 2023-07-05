@@ -32,8 +32,6 @@ let equalButton = document.getElementById("equalButton")
 
 //button events
 
-display.textContent = displayScreen;
-
 button1.addEventListener('click', () => {
     if (operator == ""){
         firstNumber += "1";
@@ -155,11 +153,11 @@ zeroButton.addEventListener('click', () => {
 })
 
 decimalButton.addEventListener('click', () => {
-    if (operator == ""){
+    if (operator == "" && (!firstNumber.includes("."))){
         firstNumber += ".";
         displayScreen += ".";
     }
-    else {
+    else if (operator != "" && !secondNumber.includes(".")) {
         secondNumber += ".";
         displayScreen += ".";
     }
@@ -206,16 +204,38 @@ clear.addEventListener('click', () => {
     display.textContent = displayScreen;
 })
 
+//running operation button
+equalButton.addEventListener('click', () => {
+    let answer;
 
-
-
-
-
-
-
-
-
-//
-
+    if (firstNumber != "" && secondNumber != "" && operator != "") {
+        firstNumber = Number(firstNumber);
+        secondNumber = Number(secondNumber);
+        
+        if (operator == "x"){
+            answer = firstNumber * secondNumber;
+        }
+        else if (operator == "-"){
+            answer = firstNumber - secondNumber;
+        }
+        else if (operator == "+"){
+            answer = firstNumber + secondNumber;
+        }
+        else if (operator == "/"){
+            if (secondNumber == 0){
+                answer = "Error: dividing by 0";
+            }
+            else{
+                answer = firstNumber / secondNumber;
+            }
+        }
+        display.textContent = answer.toString();
+        firstNumber = "";
+        secondNumber = "";
+        operator = "";
+        answer = "";
+        displayScreen = "";
+    }
+})
 
 });
